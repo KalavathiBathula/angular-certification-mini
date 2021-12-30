@@ -1,0 +1,14 @@
+/* You can add global styles to this file, and also import other style files */
+fieldset {
+    border: 1px solid #ccc;
+    position: relative;
+    legend {
+        position: absolute;
+        background-color: #fff;
+        font-size: 16px;
+        left: 10px;
+        width: auto;
+        top: -12px;
+        padding: 0 10px;
+    }
+}

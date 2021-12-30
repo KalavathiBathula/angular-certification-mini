@@ -1,0 +1,86 @@
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div>
+          <div class="card">
+            <div class="card-header text-center">
+              <h4 class="text-center"><b> My Weather App</b></h4>
+            </div>
+            <div class="card-body">
+
+              <!-- form area to add new zipcode -->
+              <fieldset class="pb-5">
+                <legend><b>Add a Location</b></legend>
+                <div class=" mt-4">
+                  <div class="row">
+                    <div class="offset-1 col-6">
+                      <label>Enter a Zipcode</label>
+                      <input class="form-control" placeholder="Please Enter Zipcode" [(ngModel)]="zipCode"
+                        id="addLocation" />
+                    </div>
+                    <div class="col-5">
+                      <br />
+                      <button class="btn btn-primary" id="addLocationBtn" (click)="getCurrentWeatherZipCode(zipCode)">
+                        Add location
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </fieldset>
+              <!-- form area to add new zipcode -->
+              <hr class="hr-style"/>
+              <!-- display list of all saved weather details-->
+              <div class="row" *ngIf='weatherDetails.length != 0; else nodata'>
+                <div *ngFor="let item of weatherDetails; let i = index"
+                  class="mt-4 col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                  <div class="well flex">
+                    <fieldset>
+                      <legend><b>{{ item.name }} ({{ item.zipcode }})</b></legend>
+                      <div class="weatherArea p-3">
+                        <div class="row">
+                          <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                            <h6><small>Current Conditions: <span class="text-success">{{ item.weather[0].main }}</span></small></h6>
+                            <h6><small>Temperatures today:</small></h6>
+                            <p>
+                              Current {{ item.main.temp - 273.15 | number: "1.0-0" }}℃ - Max
+                              {{ item.main.temp_max - 273.15 | number: "1.0-0" }}℃ - Min
+                              {{ item.main.temp_min - 273.15 | number: "1.0-0" }}℃
+                            </p>
+                          </div>
+                          <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                            <img class="weather-img"
+                              *ngIf="item.weather[0].main != 'Clear' && item.weather[0].main != 'Haze'" src="https://www.angulartraining.com/images/weather/{{
+                                        item.weather[0].main | lowercase
+                                      }}.png" />
+                            <img class="weather-img" *ngIf="item.weather[0].main === 'Haze'"
+                              src="https://www.angulartraining.com/images/weather/snow.png" />
+                              <!-- Haze -->
+
+                            <img class="weather-img" *ngIf="item.weather[0].main === 'Clear'"
+                              src="https://www.angulartraining.com/images/weather/sun.png" />
+                            <span class="close h4" (click)="remove(item.zipcode)" title="Remove">×</span>
+                          </div>
+                          
+                          <div class="col-12">
+                            <a [routerLink]="['/forecastDetails/forecast', item?.zipcode]" routerLinkActive="router-link-active"><b>Show
+                                5-day forecast for {{ item.name }}</b></a>
+                          </div>
+                        </div>
+                      </div>
+
+                    </fieldset>
+                  </div>
+                </div>
+              </div>
+              <!-- display list of all saved weather details-->
+              <ng-template #nodata>
+                <h4 class="text-center mt-4">Nodata Found</h4>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
